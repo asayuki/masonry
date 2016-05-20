@@ -1,0 +1,18 @@
+.item {
+  box-sizing: border-box;
+  float: left;
+}
+
+.container {
+  background: #F7F7F7;
+  margin: 0 auto;
+  max-width: 1024px;
+  position: relative; /* As we need to position the items with absolute */
+  width: 100%;
+}
+
+.container:after {
+  clear: both;
+  content: "";
+  display: table;
+}

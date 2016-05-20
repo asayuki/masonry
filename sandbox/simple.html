@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Masonry</title>
+    <link rel="stylesheet" href="sandbox.css" />
+    <style>
+      .item-height-small { height: 200px; }
+      .item-height-medium { height: 300px; }
+      .item-height-large { height: 400px; }
+
+      .blue { background: blue; }
+      .red { background: red; }
+      .violet { background: violet; }
+      .pink { background: pink; }
+      .green { background: green; }
+
+      .item {
+        width: 100%;
+      }
+
+      @media screen and (min-width: 500px) {
+        .item {
+          width: 50%;
+        }
+      }
+
+      @media screen and (min-width: 1024px) {
+        .item {
+          width: 33.33%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="blue item item-height-small"></div>
+      <div class="red item item-height-medium"></div>
+      <div class="violet item item-height-small"></div>
+      <div class="pink item item-height-large"></div>
+      <div class="green item item-height-large"></div>
+      <div class="blue item item-height-medium"></div>
+      <div class="red item item-height-small"></div>
+      <div class="violet item item-height-small"></div>
+      <div class="pink item item-height-large"></div>
+      <div class="green item item-height-small"></div>
+    </div>
+
+    <script src="../masonry.js"></script>
+    <script>
+      var masonry = new Masonry({
+        itemSelector: '.item',
+        container: '.container'
+      });
+    </script>
+  </body>
+</html>

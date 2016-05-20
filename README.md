@@ -14,4 +14,3 @@ var masonry = new Masonry({
 ## Todo
 
 * Fill up space in a column if this column is shorter than any of the others.
-* Support multiple containers, this is just a nighthack for now.

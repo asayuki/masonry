@@ -5,7 +5,7 @@ A very simple masonry that fills up the space beneath a element in one column in
 ## Initialize
 
 ``` js
-masonry.init({
+var masonry = new Masonry({
   itemSelector: '.item',
   container: '.container'
 });

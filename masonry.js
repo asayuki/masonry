@@ -3,84 +3,95 @@
   this.Masonry = function (opt) {
     container = document.querySelector(opt.container);
     options = opt;
-
     this.init();
   };
 
-  // 12 grid system
-  // Just so we get the right values when we're multiplying
-  var gridValues = {
-    '8': '8.3333333333',
-    '9': '9.0909090909',
-    '10': '10',
-    '11': '11.111111111',
-    '13': '12.5',
-    '14': '14,285714286',
-    '17': '16,666666667',
-    '20': '20',
-    '25': '25',
-    '33': '33.333333333',
-    '50': '50',
-    '100': '100'
-  };
-
-  // Set some other globals
   var
     container = null,
     options = null,
-    currentItemWidth = null;
+    currentItemWidth = null,
+    gridValues = {            // 12-grid system. Please change this if you'd like any other. We need the right value when we're multiplying
+      '8': '8.3333333333',
+      '9': '9.0909090909',
+      '10': '10',
+      '11': '11.111111111',
+      '13': '12.5',
+      '14': '14,285714286',
+      '17': '16,666666667',
+      '20': '20',
+      '25': '25',
+      '33': '33.333333333',
+      '50': '50',
+      '100': '100'
+    };
 
   function windowResize () {
     var newItemWidth = getItemPercentage();
     if (currentItemWidth !== newItemWidth) {
-      // We need to rearrange some items it seems
       currentItemWidth = newItemWidth;
-      rearrangeItems(true);
+      arrangeItems();
     } else {
-      rearrangeItems(false);
+      if (typeof options.growItems !== 'undefined' && options.growItems)
+        arrangeItems(true);
     }
   }
 
   // As its ineffeciant to get the css-style value, we will
-  // just calculate the percentage by the items current width
-  // and the containers width. Might be a better way, and this
+  // just calculate the percentage by the first item's current width
+  // and the container's width. Might be a better way, and this
   // might be slow, but hey.
   function getItemPercentage () {
     return Math.round((parseInt(window.getComputedStyle(container.firstElementChild, null).getPropertyValue('width')) / parseInt(window.getComputedStyle(container, null).getPropertyValue('width'))) * 100);
   }
 
-  function rearrangeItems (all) {
+  /**
+   * Set left & toppositions of items
+   * @param {bool} ignoreLeft - Set to true if it should not calculate leftposition
+   */
+  function arrangeItems (ignoreLeft) {
     var
       columnsHeights = [],
       columns = Math.round(100/currentItemWidth),
       items = container.querySelectorAll(options.itemSelector),
-      n = 0;
+      n = 0,
+      sc = 0;
 
     [].slice.call(items).forEach(function (item, i) {
-      if (all) {
-        item.style.position = 'absolute';
-        item.style.left = (gridValues['' + currentItemWidth + ''] * n) + '%';
-      }
+      // Set position absolute on the item
+      item.style.position = 'absolute';
 
-      // Let them grow, let them grooow
-      // Let them take over the flow
-      if (typeof options.itemsGrow !== 'undefined' && options.itemsGrow) {
-        var heightMultiplication = item.getAttribute('data-heightmultiplication');
-        item.style.height = (parseInt(window.getComputedStyle(item, null).getPropertyValue('width')) * heightMultiplication) + 'px';
-      }
-
-      // Now we need to add some top to the next elements
-      if (i > (columns - 1))
-        item.style.top = (items[i - columns].offsetTop + items[i - columns].offsetHeight) + 'px';
-      else
+      // Check which column is the shortest
+      // And set the top to that columns height
+      // We don't however do this on the first row
+      // As they just need to be 0
+      if (i > (columns - 1)) {
+        sc = columnsHeights.indexOf(Math.min(...columnsHeights));
+        item.style.top = columnsHeights[sc] + 'px';
+      } else {
+        sc = n;
         item.style.top = '';
+      }
 
-      columnsHeights[n] = (item.offsetTop + item.offsetHeight);
+      // Set left & height of item if not ignoring
+      if (typeof ignoreLeft === 'undefined' || (typeof ignoreLeft !== 'undefined' && ignoreLeft === false)) {
+        item.style.left = (gridValues['' + currentItemWidth + ''] * sc) + '%';
+      }
 
-      if (n === (columns - 1))
-        n = 0
-      else
-        n++;
+      // Let the items grow in height as they grow in width
+      // Their height as stated in the CSS is ignored, and is instead calculated by width multiplying by data-heightmultiplication set on the item
+      if (typeof options.growItems !== 'undefined' && options.growItems) {
+        if (columns === 1 && (typeof options.disableGrowItemsOneColumn !== 'undefined' && options.disableGrowItemsOneColumn === true)) {
+          item.style.height = '';
+        } else {
+          var heightMultiplication = item.getAttribute('data-heightmultiplication');
+          item.style.height = (parseInt(window.getComputedStyle(item, null).getPropertyValue('width')) * (heightMultiplication === null ? 1 : heightMultiplication) ) + 'px';
+        }
+      }
+
+      // Add item-height to its column
+      columnsHeights[sc] = (item.offsetTop + item.offsetHeight);
+
+      n = (n === columns - 1) ? 0 : (n+1);
     });
 
     // Lets set the container to the height of the longest column
@@ -95,14 +106,13 @@
   }
 
   Masonry.prototype.init = function (opt) {
-    currentItemWidth = getItemPercentage();
-    rearrangeItems(true);
-
+    this.repaint();
     window.addEventListener('resize', windowResize, false);
   },
 
   Masonry.prototype.repaint = function () {
     currentItemWidth = getItemPercentage();
-    rearrangeItems(true);
+    arrangeItems();
   }
+
 })(typeof window !== 'undefined' ? window : this);

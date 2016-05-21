@@ -9,7 +9,7 @@ var masonry = new Masonry({
   itemSelector: '.item',
   container: '.container',
   growItems: false,
-  itemsGrowOneColumn: true,
+  disableGrowItemsOneColumn: false,
 });
 ```
 

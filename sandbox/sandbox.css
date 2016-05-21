@@ -1,5 +1,20 @@
+body, html {
+  padding: 0;
+  margin: 0;
+}
+
+.turquoise-bg, .turquoise-bg .item-container { background: #1abc9c; }
+.emerald-bg, .emerald-bg .item-container { background: #2ecc71; }
+.peterriver-bg, .peterriver-bg .item-container { background: #3498db; }
+.amethyst-bg, .amethyst-bg .item-container { background: #9b59b6; }
+.wetasphalt-bg, .wetasphalt-bg .item-container { background: #34495e; }
+.sunflower-bg, .sunflower-bg .item-container { background: #f1c40f; }
+.carrot-bg, .carrot-bg .item-container { background: #e67e22; }
+.alizarin-bg, .alizarin-bg .item-container { background: #e74c3c; }
+
 .item {
   box-sizing: border-box;
+  color: white;
   float: left;
 }
 

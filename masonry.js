@@ -1,6 +1,7 @@
-(function (window) {
+(function () {
+  'use strict';
 
-  this.Masonry = function (opt) {
+  var Masonry = function (opt) {
     container = document.querySelector(opt.container);
     options = opt;
     this.init();
@@ -65,7 +66,7 @@
       // We don't however do this on the first row
       // As they just need to be 0
       if (i > (columns - 1)) {
-        sc = columnsHeights.indexOf(Math.min(...columnsHeights));
+        sc = columnsHeights.indexOf(Math.min.apply(null, columnsHeights));
         item.style.top = columnsHeights[sc] + 'px';
       } else {
         sc = n;
@@ -105,7 +106,7 @@
     });
   }
 
-  Masonry.prototype.init = function (opt) {
+  Masonry.prototype.init = function () {
     this.repaint();
     window.addEventListener('resize', windowResize, false);
   },
@@ -114,5 +115,7 @@
     currentItemWidth = getItemPercentage();
     arrangeItems();
   }
+
+  window.Masonry = Masonry;
 
 })(typeof window !== 'undefined' ? window : this);

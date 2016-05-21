@@ -17,7 +17,7 @@ var masonry = new Masonry({
 
 * `container` - CSS-selector of the container that holds the items
 * `itemSelector` - CSS-selector of the items
-* `growItems` - Bool-value if items should grow in height as they grow in width. Defaults to `false`. [Read more here here.](#itemsgrow)
+* `growItems` - Bool-value if items should grow in height as they grow in width. Defaults to `false`. [Read more here.](#itemsgrow)
 * `disableGrowItemsOneColumn` - Basically disabled item height growth when it's only one column. Defaults to `false`.
 
 ### ItemsGrow
@@ -28,7 +28,7 @@ You would need to add a data-attribute with the name of `data-heightmultiplicati
 
 If `data-heightmultiplication` is not present, it will default back to `1`.
 
-`itemGrow` will set its own height, there for height from CSS will be ignored/overwritten. But it could be wise so set a defaultheight in CSS in case of javascriptfailure or javascript not enabled.
+`itemGrow` will set its own height, therefore height from CSS will be ignored/overwritten. But it could be wise so set a defaultheight in CSS in case of javascriptfailure or javascript not enabled.
 
 ``` html
 <div class="container">

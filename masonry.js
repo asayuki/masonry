@@ -109,12 +109,12 @@
   Masonry.prototype.init = function () {
     this.repaint();
     window.addEventListener('resize', windowResize, false);
-  },
+  };
 
   Masonry.prototype.repaint = function () {
     currentItemWidth = getItemPercentage();
     arrangeItems();
-  }
+  };
 
   window.Masonry = Masonry;
 

@@ -13,6 +13,20 @@ var masonry = new Masonry({
 });
 ```
 
+Or if you have several Mason-areas on the same page
+
+``` js
+window.masonries = [];
+[].slice.call(document.querySelectorAll('.container')).forEach(function (mason) {
+  window.masonries.push(new Masonry({
+    itemSelector: '.item',
+    container: mason,
+    growItems: true,
+    disableGrowItemsOneColumn: false,
+  }));
+});
+```
+
 ## Options
 
 * `container` - CSS-selector of the container that holds the items
@@ -48,7 +62,5 @@ If `data-heightmultiplication` is not present, it will default back to `1`.
 ## Changelog
 
 * Items now fill up spaces in columns that are shorter than the rest.
-
-## Todo
-
-* When itemgrow is enabled and onecolumngrowth is disabled - we can optimize this more efficiently by disableing arrangeItems();
+* Now gets the width from the first item. So item no.1 should not be Xpx shorter than the rest.
+* When itemgrow is enabled and onecolumngrowth id disable we no longer trigger arrangeItems();

@@ -10,6 +10,7 @@ var masonry = new Masonry({
   container: '.container',
   growItems: false,
   disableGrowItemsOneColumn: false,
+  maxHeight: 500
 });
 ```
 
@@ -33,6 +34,7 @@ window.masonries = [];
 * `itemSelector` - CSS-selector of the items
 * `growItems` - Bool-value if items should grow in height as they grow in width. Defaults to `false`. [Read more here.](#itemsgrow)
 * `disableGrowItemsOneColumn` - Basically disabled item height growth when it's only one column. Defaults to `false`.
+* `maxHeight` - Maximum height of item inside the masonry
 
 ### ItemsGrow
 
